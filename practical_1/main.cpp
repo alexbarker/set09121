@@ -23,8 +23,10 @@ Vector2f ballVelocity;
 bool server = false;
 
 Font font;
-Text scoreText;
-int score = 0;
+Text scoreText1;
+Text scoreText2;
+int score1 = 0;
+int score2 = 0;
 bool two_player = false;
 
 void reset() {
@@ -35,8 +37,10 @@ void reset() {
 	ball.setPosition(gameWidth / 2, gameHeight / 2);
 	ballVelocity = { server ? 100.0f : -100.0f, 60.0f };
 	// Update score text
-	scoreText.setString(to_string(score));
-	scoreText.setPosition((gameWidth * 0.5f) - (scoreText.getLocalBounds().width * 0.5f), 0);
+	scoreText1.setString(to_string(score1));
+	scoreText1.setPosition((gameWidth * 0.8f) - (scoreText1.getLocalBounds().width * 0.5f), 0);
+	scoreText2.setString(to_string(score2));
+	scoreText2.setPosition((gameWidth * 0.2f) - (scoreText2.getLocalBounds().width * 0.5f), 0);
 }
 
 void Load() {
@@ -51,9 +55,11 @@ void Load() {
 	// Load font-face from res dir
 	font.loadFromFile("RobotoMono-Regular.ttf");
 	// Set text element to use font
-	scoreText.setFont(font);
+	scoreText1.setFont(font);
+	scoreText2.setFont(font);
 	// set the character size to 24 pixels  
-	scoreText.setCharacterSize(24);
+	scoreText1.setCharacterSize(34);
+	scoreText2.setCharacterSize(34);
 	reset();
 }
 
@@ -138,12 +144,12 @@ void Update(RenderWindow &window) {
 	}
 	else if (bx > gameWidth) {
 		// right wall
-		score++;
+		score2++;
 		reset();
 	}
 	else if (bx < 0) {
 		// left wall
-		score--;
+		score1++;
 		reset();
 	}
 	else if (
@@ -179,7 +185,8 @@ void Render(RenderWindow &window) {
 	window.draw(paddles[0]);
 	window.draw(paddles[1]);
 	window.draw(ball);
-	window.draw(scoreText);
+	window.draw(scoreText1);
+	window.draw(scoreText2);
 }
 
 int main() {
