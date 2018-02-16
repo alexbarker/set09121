@@ -28,11 +28,39 @@ target_link_libraries(PRACTICAL_1 sfml-graphics)
 file(GLOB_RECURSE SOURCES practical_2/*.cpp practical_2/*.h)
 add_executable(PRACTICAL_2_INVADERS ${SOURCES})
 target_include_directories(PRACTICAL_2_INVADERS SYSTEM PRIVATE ${SFML_INCS})
-target_link_libraries(PRACTICAL_2_INVADERS sfml-graphics)
+#### target_link_libraries(PRACTICAL_2_INVADERS sfml-graphics)
+set(EXECUTABLES ${EXECUTABLES} PRACTICAL_2_INVADERS)
 
-set_target_properties(PRACTICAL_2_INVADERS PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration))
+#### Practical 3 ####
+#### Tile Engine ####
+file(GLOB_RECURSE SOURCES practical_3/*.cpp practical_3/*.h)
+add_executable(PRACTICAL_3 ${SOURCES})
+target_include_directories(PRACTICAL_3 SYSTEM PRIVATE ${SFML_INCS})
+set(EXECUTABLES ${EXECUTABLES} PRACTICAL_3)
+
+#### set_target_properties(PRACTICAL_2_INVADERS PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration))
 
 add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/res" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res)
-add_dependencies(PRACTICAL_2_INVADERS copy_resources)
+#### add_dependencies(PRACTICAL_2_INVADERS copy_resources)
+
+#### Link Dependencies ####
+foreach (exe ${EXECUTABLES})
+	# Set working directory to build dir in visual studio
+	set_target_properties(${exe} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration))
+	
+	target_link_libraries(${exe}
+		# lib_maths # We'll make this later.
+		optimized sfml-graphics debug sfml-graphics-d
+		optimized sfml-audio debug sfml-audio-d 
+		optimized sfml-window debug sfml-window-d 
+		optimized sfml-system debug sfml-system-d 
+		optimized sfml-graphics debug sfml-graphics-d
+		optimized sfml-main)
+	
+	add_dependencies(${exe} sfml-graphics sfml-audio copy_resources)
+endforeach ()
+
+
+
 
 
