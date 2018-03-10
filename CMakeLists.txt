@@ -16,6 +16,17 @@ add_subdirectory("lib/sfml")
 set(SFML_INCS "lib/sfml/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
+## Tile loader lib
+file(GLOB_RECURSE SOURCE_FILES lib_tile_level_loader/*.cpp lib_tile_level_loader/*.h)
+add_library(lib_tile_level_loader STATIC ${SOURCE_FILES})
+target_include_directories(lib_tile_level_loader INTERFACE "${CMAKE_SOURCE_DIR}/lib_tile_level_loader/" )
+target_link_libraries(lib_tile_level_loader lib_maths sfml-graphics)
+
+## Maths lib
+add_library(lib_maths INTERFACE)
+target_sources(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths/maths.h")
+target_include_directories(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths" SYSTEM INTERFACE ${SFML_INCS})
+
 #### Practical 1 ####
 #### PONG ####
 file(GLOB_RECURSE SOURCES practical_1/*.cpp practical_1/*.h)
@@ -36,7 +47,9 @@ set(EXECUTABLES ${EXECUTABLES} PRACTICAL_2_INVADERS)
 file(GLOB_RECURSE SOURCES practical_3/*.cpp practical_3/*.h)
 add_executable(PRACTICAL_3 ${SOURCES})
 target_include_directories(PRACTICAL_3 SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(PRACTICAL_3 lib_tile_level_loader)
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_3)
+add_dependencies(PRACTICAL_3 copy_resources)
 
 #### set_target_properties(PRACTICAL_2_INVADERS PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration))
 
@@ -49,7 +62,7 @@ foreach (exe ${EXECUTABLES})
 	set_target_properties(${exe} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration))
 	
 	target_link_libraries(${exe}
-		# lib_maths # We'll make this later.
+		lib_maths # We'll make this later.
 		optimized sfml-graphics debug sfml-graphics-d
 		optimized sfml-audio debug sfml-audio-d 
 		optimized sfml-window debug sfml-window-d 
@@ -59,8 +72,3 @@ foreach (exe ${EXECUTABLES})
 	
 	add_dependencies(${exe} sfml-graphics sfml-audio copy_resources)
 endforeach ()
-
-
-
-
-
