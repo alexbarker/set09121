@@ -16,6 +16,11 @@ add_subdirectory("lib/sfml")
 set(SFML_INCS "lib/sfml/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
+#### Engine ####
+
+
+
+
 #### Practical 1 ####
 #### PONG ####
 file(GLOB_RECURSE SOURCES practical_1/*.cpp practical_1/*.h)
@@ -46,19 +51,25 @@ target_link_libraries(PRACTICAL_3_TILE lib_tile_level_loader lib_maths sfml-grap
 file(GLOB_RECURSE SOURCES practical_4/*.cpp practical_4/*.h)
 add_executable(PRACTICAL_4_PACMAN ${SOURCES})
 target_include_directories(PRACTICAL_4_PACMAN SYSTEM PRIVATE ${SFML_INCS})
-target_link_libraries(PRACTICAL_4_PACMAN sfml-graphics)
+target_link_libraries(PRACTICAL_4_PACMAN lib_tile_level_loader lib_maths lib_ecm sfml-graphics)
 
 ## COPY RESOURCES ##
 add_custom_target(copy_resources_pacman ALL COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/res" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res)
 add_dependencies(PRACTICAL_4_PACMAN copy_resources_pacman)
 
-## Tile Loader lib
+## Tile Loader lib ##
 file(GLOB_RECURSE SOURCE_FILES lib_tile_level_loader/*.cpp lib_tile_level_loader/*.h)
 add_library(lib_tile_level_loader STATIC ${SOURCE_FILES})
 target_include_directories(lib_tile_level_loader INTERFACE "${CMAKE_SOURCE_DIR}/lib_tile_level_loader/" ${SFML_INCS})
 target_link_libraries(lib_tile_level_loader lib_maths sfml-graphics)
 
-## Maths lib
+## Maths lib ##
 add_library(lib_maths INTERFACE)
 target_sources(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths/maths.h")
 target_include_directories(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths" SYSTEM INTERFACE ${SFML_INCS})
+
+## ECM lib ##
+file(GLOB_RECURSE SOURCE_FILES lib_ecm/*.cpp lib_ecm/*.h)
+add_library(lib_ecm STATIC ${SOURCE_FILES})
+target_include_directories(lib_ecm INTERFACE "${CMAKE_SOURCE_DIR}/lib_ecm")
+target_link_libraries(lib_ecm PRIVATE lib_maths)

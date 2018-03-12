@@ -1,8 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "player.h"
-#include "ghost.h"
-#include "entity.h"
+//#include "player.h"
+//#include "ghost.h"
+//#include "entity.h"
+#include "ecm.h"
 #include "system_renderer.h"
 #include "pacman.h"
 #include "scene.h"
@@ -12,6 +13,7 @@ using namespace std;
 
 const int gameWidth = 800;
 const int gameHeight = 600;
+
 std::shared_ptr<Scene> gameScene;
 std::shared_ptr<Scene> menuScene;
 std::shared_ptr<Scene> activeScene;
@@ -47,7 +49,7 @@ void Update(RenderWindow &window) {
 }
 
 void Render(RenderWindow &window) {
-	activeScene->Render(window);
+	activeScene->Render();
 	Renderer::render();
 }
 
