@@ -33,6 +33,10 @@ void Update(RenderWindow &window) {
 		}
 	}
 
+	if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+		window.close();
+	}
+
 	player->Update(dt);	
 }
 

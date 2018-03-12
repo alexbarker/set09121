@@ -1,16 +1,28 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "player.h"
+#include "ghost.h"
+#include "entity.h"
+#include "system_renderer.h"
 
 using namespace sf;
 using namespace std;
 
 const int gameWidth = 800;
 const int gameHeight = 600;
-
-//Player *player;
+EntityManager em;
 
 void Load() {
+	auto player = make_shared<Player>();
+	em.list.push_back(player);
 
+	Vector2f pos = Vector2f{ 300.0f, 300.0f };
+	for (int i = 0; i < 4; ++i) {
+		auto ghost = make_shared<Ghost>();
+		ghost->setPosition(pos);
+		em.list.push_back(ghost);
+		pos += Vector2f(70.0f, 0);
+	}
 }
 
 void Update(RenderWindow &window) {
@@ -30,16 +42,21 @@ void Update(RenderWindow &window) {
 		window.close();
 	}
 
-	//player->Update(dt);
+	em.Update(dt);
 }
 
 void Render(RenderWindow &window) {
-	//ls::Render(window);
-	//player->Render(window);
+	em.Render(window);
+	Renderer::render();
+	//move(Vector2f{ static_cast<float>((rand() % 6)), static_cast<float>((rand() % 6)) });
+
+	//pauseSprite.setTextureRect({ spriteWidth * (rand() % 6), 0, spriteWidth, spriteHeight });
+	//pauseSprite.setPosition(rand() % gameWidth, rand() % gameHeight);
 }
 
 int main() {
-	RenderWindow window(VideoMode(800, 600), "Pacman");
+	RenderWindow window(VideoMode(gameWidth, gameHeight), "Pacman");
+	Renderer::initiliase(window);
 
 	Load();
 
