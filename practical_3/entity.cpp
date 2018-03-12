@@ -1,22 +1,14 @@
 #include "entity.h"
 
-using namespace sf;
 using namespace std;
+using namespace sf;
 
-Vector2f Entity::getPosition() const {
-	return position;
-}
+const Vector2f Entity::getPosition() {return _position;}
 
-void Entity::setPosition(const Vector2f &position) {
-	this->position = position;
-}
+void Entity::setPosition(const Vector2f &pos) { _position = pos;}
 
-void Entity::move(const Vector2f &position) {
-	this->position += position;
-}
+void Entity::move(const Vector2f &pos) { _position += pos; }
 
-void Entity::update(const float dt) {
-	shape->setPosition(position);
-}
+void Entity::Update(const double dt) {_shape->setPosition(_position);}
 
-Entity::Entity(unique_ptr<Shape> shape) : shape(std::move(shape)) {}
+Entity::Entity(unique_ptr<Shape> s) : _shape(std::move(s)) {}

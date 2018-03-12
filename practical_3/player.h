@@ -3,13 +3,11 @@
 
 class Player : public Entity {
 private:
-	float speed;
-
-	bool validMove(sf::Vector2f pos);
+	float _speed;
 
 public:
+	void Update(double dt) override;
 	Player();
-
-	void update(float dt) override;
-	void render(sf::RenderWindow& window) const override;
+	void Render(sf::RenderWindow &window) const override;
+	bool validMove(sf::Vector2f pos);
 };
