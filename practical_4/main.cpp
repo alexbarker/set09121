@@ -1,8 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-//#include "player.h"
-//#include "ghost.h"
-//#include "entity.h"
 #include "ecm.h"
 #include "system_renderer.h"
 #include "pacman.h"
@@ -11,16 +8,17 @@
 using namespace sf;
 using namespace std;
 
-const int gameWidth = 800;
-const int gameHeight = 600;
-
+const int gameWidth = 700;
+const int gameHeight = 720;
 std::shared_ptr<Scene> gameScene;
 std::shared_ptr<Scene> menuScene;
 std::shared_ptr<Scene> activeScene;
 
 void Load() {
-	gameScene = make_shared<GameScene>();
+    gameScene = make_shared<GameScene>();
 	menuScene = make_shared<MenuScene>();
+	gameScene.reset(new GameScene());
+	menuScene.reset(new MenuScene());
 	gameScene->Load();
 	menuScene->Load();
 	//set start scene
@@ -53,10 +51,10 @@ void Render(RenderWindow &window) {
 	Renderer::render();
 }
 
-int main() {
+  int main() {
 	RenderWindow window(VideoMode(gameWidth, gameHeight), "PAC MAN");
 	Renderer::initiliase(window);
-
+	
 	Load();
 
 	while (window.isOpen()) {
@@ -66,5 +64,5 @@ int main() {
 		window.display();
 	}
 
-	return 0;
-}
+    return 0;
+  }

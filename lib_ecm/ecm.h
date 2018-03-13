@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include "maths.h"
 #include <algorithm>
 #include <memory>
@@ -9,14 +10,15 @@
 class Component;
 
 class Entity {
-protected:
+private:
 	std::vector<std::shared_ptr<Component>> _components;
 	sf::Vector2f _position;
 
+	int _points;
 	float _rotation;
 	bool _alive;
 	bool _visible;
-	bool _forDeletion; // customize
+	bool _forDeletion;
 
 public:
 	Entity();
@@ -35,6 +37,8 @@ public:
 	void setForDelete();
 	bool isVisible() const;
 	void setVisible(bool _value);
+	void setPoints(int p);
+	int getPoints();
 
 	template <typename T, typename... Targs>
 	std::shared_ptr<T> addComponent(Targs... params) {
@@ -43,6 +47,22 @@ public:
 		_components.push_back(sp);
 		return sp;
 	}
+
+	const std::vector<std::shared_ptr<Component>>& getComponents() {
+		return _components;
+	}
+
+	template<typename ComponentType>
+	ComponentType* GetComponent() {
+		for (unsigned int i = 0; i < _components.size(); ++i) {
+			if (ComponentType* cmp = dynamic_cast<ComponentType*>(_components[i].get())) {
+				return cmp;
+			}
+		}
+
+		return nullptr;
+	}
+
 };
 
 struct EntityManager {
@@ -59,7 +79,8 @@ protected:
 
 public:
 	Component() = delete;
-	bool is_forDeletion() const;
+	bool is_forDeletion();
+	void setForDeletion();
 	virtual void Update(double dt) = 0;
 	virtual void Render() = 0;
 	virtual ~Component();

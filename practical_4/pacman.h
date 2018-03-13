@@ -1,6 +1,7 @@
 #pragma once
 
 #include "scene.h"
+#include "ecm.h"
 
 extern std::shared_ptr<Scene> gameScene;
 extern std::shared_ptr<Scene> menuScene;
@@ -20,6 +21,7 @@ public:
 class GameScene : public Scene {
 private:
 	sf::Text text;
+	sf::Text textClock;
 	sf::Clock scoreClock;
 	void Respawn();
 
@@ -28,4 +30,5 @@ public:
 	void Update(double dt) override;
 	void Render() override;
 	void Load() override;
+	std::shared_ptr<Entity> makeNibble(sf::Vector2f& nl, sf::Color c, float size, int pts);
 };

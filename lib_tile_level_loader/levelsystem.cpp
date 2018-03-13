@@ -10,9 +10,10 @@ size_t LevelSystem::_width;
 size_t LevelSystem::_height;
 Vector2f LevelSystem::_offset = Vector2f{ 0 , 0 };
 
-float LevelSystem::_tileSize(100.0f);
+float LevelSystem::_tileSize = 25.0f; // PAC MAN
+//float LevelSystem::_tileSize = 100.0f; // TILE ENGINE
 vector<std::unique_ptr<sf::RectangleShape>> LevelSystem::_sprites;
-std::map<LevelSystem::TILE, sf::Color> LevelSystem::_colours{ {WALL, Color::White }, { END, Color::Red }, {START, Color::Blue } };
+std::map<LevelSystem::TILE, sf::Color> LevelSystem::_colours{ {WALL, Color::Blue }, { END, Color::Red } };
 
 sf::Color LevelSystem::getColor(LevelSystem::TILE t) {
 	auto it = _colours.find(t);
@@ -107,7 +108,7 @@ void LevelSystem::buildSprites() {
 }
 
 sf::Vector2f LevelSystem::getTilePosition(sf::Vector2ul p) {
-	return (Vector2f(p.x, p.y) * _tileSize);
+	return (Vector2f(p.x * _tileSize, p.y * _tileSize));
 }
 
 LevelSystem::TILE LevelSystem::getTile(sf::Vector2ul p) {
@@ -126,6 +127,20 @@ LevelSystem::TILE LevelSystem::getTileAt(Vector2f v) {
 	return getTile(Vector2ul((v - _offset) / (_tileSize)));
 }
 
+std::vector<sf::Vector2f> LevelSystem::findTiles(TILE t)
+{
+	vector<Vector2f> found;
+	for (size_t y = 0; y < LevelSystem::getHeight(); ++y) {
+		for (size_t x = 0; x < LevelSystem::getWidth(); ++x) {
+			if (getTile({ x, y }) == t) {
+				found.push_back((getTilePosition(Vector2ul{ x, y }) + Vector2f(_tileSize / 2.0f, _tileSize / 2.0f)));
+			}
+		}
+	}
+
+	return found;
+}
+
 const size_t LevelSystem::getHeight()
 {
 	return _height;
@@ -134,6 +149,17 @@ const size_t LevelSystem::getHeight()
 const size_t LevelSystem::getWidth()
 {
 	return _width;
+}
+
+Vector2f LevelSystem::getStart()
+{
+	for (size_t y = 0; y < LevelSystem::getHeight(); ++y) {
+		for (size_t x = 0; x < LevelSystem::getWidth(); ++x) {
+			if (getTile({ x, y }) == START) {
+				return getTilePosition({ x, y }) + Vector2f(_tileSize/2.0f, _tileSize / 2.f);
+			}
+		}
+	}
 }
 
 void LevelSystem::Render(RenderWindow &window) {

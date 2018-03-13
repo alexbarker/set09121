@@ -2,18 +2,17 @@
 #include "system_renderer.h"
 #include <iostream>
 
-/*
-void SpriteComponent::Update(double dt) {
-	_sprite->setPosition(_parent->getPosition());
-}*/
+ShapeComponent::ShapeComponent(Entity *p) : Component(p), _shape(std::make_shared<sf::CircleShape>()) {}
 
 void ShapeComponent::Update(double dt) {
 	_shape->setPosition(_parent->getPosition());
 }
 
-void ShapeComponent::Render() { Renderer::queue(_shape.get()); }
+void ShapeComponent::Render() {
+	Renderer::queue(_shape.get());
+}
 
-sf::Shape& ShapeComponent::getShape() const { return *_shape; }
+sf::Shape& ShapeComponent::getShape() const {
+	return *_shape;
+}
 
-ShapeComponent::ShapeComponent(Entity *p) 
-	: Component(p), _shape(std::make_shared<sf::CircleShape>()) {}
