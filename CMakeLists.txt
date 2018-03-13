@@ -16,8 +16,13 @@ add_subdirectory("lib/sfml")
 set(SFML_INCS "lib/sfml/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
-#### Engine ####
+# B2D - Box2D physics library
+add_subdirectory("lib/b2d/Box2D")
+#include_directories("lib/b2d/Box2D/")
+set(B2D_INCS "lib/b2d/Box2D/")
+link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
+#### Engine ####
 
 
 
@@ -56,6 +61,14 @@ target_link_libraries(PRACTICAL_4_PACMAN lib_tile_level_loader lib_maths lib_ecm
 ## COPY RESOURCES ##
 add_custom_target(copy_resources_pacman ALL COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/res" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res)
 add_dependencies(PRACTICAL_4_PACMAN copy_resources_pacman)
+
+#### Practical 5 ####
+#### Physics ####
+file(GLOB_RECURSE SOURCES practical_5/*.cpp practical_5/*.h)
+add_executable(PRACTICAL_5_PHYSICS ${SOURCES})
+target_include_directories(PRACTICAL_5_PHYSICS SYSTEM PRIVATE ${SFML_INCS} ${B2D_INCS})
+target_link_libraries(PRACTICAL_5_PHYSICS Box2D)
+set(EXECUTABLES ${EXECUTABLES} PRACTICAL_5_PHYSICS)
 
 ## Tile Loader lib ##
 file(GLOB_RECURSE SOURCE_FILES lib_tile_level_loader/*.cpp lib_tile_level_loader/*.h)
