@@ -41,7 +41,7 @@ void Update(RenderWindow &window) {
 }
 
 void Render(RenderWindow &window) {
-	ls::Render(window);
+	ls::render(window);
 	player->Render(window);
 }
 

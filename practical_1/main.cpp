@@ -54,7 +54,7 @@ void Load() {
 	ball.setRadius(ballRadius - 3);
 	ball.setOrigin(ballRadius / 2, ballRadius / 2);
 	// Load font-face from res dir
-	font.loadFromFile("RobotoMono-Regular.ttf");
+	font.loadFromFile("res/fonts/RobotoMono-Regular.ttf");
 	// Set text element to use font
 	scoreText1.setFont(font);
 	scoreText2.setFont(font);
