@@ -13,3 +13,4 @@ Repository for Games Engineering Workbook.
 | 4 | PACMAN |
 | 5 | PHYSICS |
 | 6 | PLATFORMER |
+| 7 | AI: Steering and Pathfinding |
