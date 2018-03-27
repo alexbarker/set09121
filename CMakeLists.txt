@@ -126,6 +126,13 @@ source_group("resources" FILES ${RESOURCE_FILES})
 target_link_libraries(PRACTICAL_8_DECISIONS lib_engine)
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_8_DECISIONS)
 
+#### Practical 9 ####
+#### Deployment ####
+file(GLOB_RECURSE SOURCES practical_9/*.cpp practical_9/*.h)
+add_executable(PRACTICAL_9_DEPLOY ${SOURCES} ${RESOURCE_FILES})
+target_link_libraries(PRACTICAL_9_DEPLOY lib_engine)
+set(EXECUTABLES ${EXECUTABLES} PRACTICAL_9_DEPLOY)
+
 #### Target for copying resources to build dir####
 if(APPLE)
   add_custom_target(copy_resources ALL
