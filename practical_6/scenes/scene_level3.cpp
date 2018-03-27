@@ -18,31 +18,31 @@ void Level3Scene::Load() {
 
   // Create player
   {
-    // *********************************
-
-
-    // pl->setPosition({100, 100});
-
-
-
-
-
-
-    // *********************************
+	  // *********************************
+	  player = makeEntity();
+	  player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+	  // pl->setPosition({100, 100});
+	  auto s = player->addComponent<ShapeComponent>();
+	  s->setShape<sf::RectangleShape>(Vector2f(20.f, 30.f));
+	  s->getShape().setFillColor(Color::Green);
+	  s->getShape().setOrigin(10.f, 15.f);
+	  player->addTag("player");
+	  player->addComponent<PlayerPhysicsComponent>(Vector2f(20.f, 30.f));
+	  // *********************************
   }
 
   // Add physics colliders to level tiles.
   {
-    // *********************************
-
-
-
-
-
-
-
-
-    // *********************************
+	  // *********************************
+	  auto walls = ls::findTiles(ls::WALL);
+	  for (auto w : walls) {
+		  auto pos = ls::getTilePosition(w);
+		  pos += Vector2f(20.f, 20.f); //offset to center
+		  auto e = makeEntity();
+		  e->setPosition(pos);
+		  e->addComponent<PhysicsComponent>(false, Vector2f(40.f, 40.f));
+	  }
+	  // *********************************
   }
 
   cout << " Scene 3 Load Done" << endl;
