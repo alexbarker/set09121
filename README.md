@@ -14,3 +14,5 @@ Repository for Games Engineering Workbook.
 | 5 | PHYSICS |
 | 6 | PLATFORMER |
 | 7 | AI: Steering and Pathfinding |
+| 8 | AI: Making Decisions |
+| 9 | DEPLOYMENT |
