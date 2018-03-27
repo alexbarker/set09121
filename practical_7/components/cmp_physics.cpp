@@ -6,6 +6,7 @@ using namespace sf;
 
 using namespace Physics;
 
+// Eventaul problems: section 6.3.1 at p. 96
 void PhysicsComponent::update(double dt) {
   _parent->setPosition(invert_height(bv2_to_sv2(_body->GetPosition())));
   _parent->setRotation((180 / b2_pi) * _body->GetAngle());
