@@ -12,3 +12,4 @@ Repository for Games Engineering Workbook.
 | 3 | TILE ENGINE |
 | 4 | PACMAN |
 | 5 | PHYSICS |
+| 6 | PLATFORMER |
