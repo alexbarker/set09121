@@ -68,10 +68,6 @@ add_executable(PRACTICAL_2_INVADERS ${SOURCES} ${RESOURCE_FILES})
 target_include_directories(PRACTICAL_2_INVADERS SYSTEM PRIVATE ${SFML_INCS})
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_2_INVADERS)
 
-## COPY RESOURCES ##
-##add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/res" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res)
-##add_dependencies(PRACTICAL_2_INVADERS copy_resources)
-
 #### Practical 3 ####
 #### Tile ####
 file(GLOB_RECURSE SOURCES practical_3/*.cpp practical_3/*.h)
@@ -87,10 +83,6 @@ add_executable(PRACTICAL_4_PACMAN ${SOURCES} ${RESOURCE_FILES})
 target_include_directories(PRACTICAL_4_PACMAN SYSTEM PRIVATE ${SFML_INCS})
 target_link_libraries(PRACTICAL_4_PACMAN lib_tile_level_loader lib_maths lib_ecm sfml-graphics)
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_4_PACMAN)
-
-## COPY RESOURCES ##
-##add_custom_target(copy_resources_pacman ALL COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/res" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res)
-##add_dependencies(PRACTICAL_4_PACMAN copy_resources_pacman)
 
 #### Practical 5 ####
 #### Physics ####
@@ -112,9 +104,16 @@ source_group("resources" FILES ${RESOURCE_FILES})
 target_link_libraries(PRACTICAL_6_PLATFORMER lib_engine)
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_6_PLATFORMER)
 
-## COPY RESOURCES ##
-##add_custom_target(copy_resources_physics ALL COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/res" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res)
-##add_dependencies(PRACTICAL_5_PHYSICS copy_resources_physics)
+#### Practical 7 ####
+## AI: Steering and Pathfinding
+file(GLOB_RECURSE SOURCES practical_7/*.cpp practical_7/*.h)
+file(GLOB_RECURSE CMPNTS practical_7/components/*.cpp practical_7/components.h)
+file(GLOB_RECURSE SCENES practical_7/scenes/*.cpp practical_7/scenes/*.h)
+add_executable(PRACTICAL_7_STEERING ${SOURCES} ${CMPNTS} ${SCENES} ${RESOURCE_FILES})
+source_group("components" FILES ${CMPNTS})
+source_group("resources" FILES ${RESOURCE_FILES})
+target_link_libraries(PRACTICAL_7_STEERING lib_engine)
+set(EXECUTABLES ${EXECUTABLES} PRACTICAL_7_STEERING)
 
 #### Target for copying resources to build dir####
 if(APPLE)
@@ -151,6 +150,3 @@ foreach (exe ${EXECUTABLES})
 
   add_dependencies(${exe} sfml-graphics sfml-audio copy_resources)
 endforeach ()
-
-
-
