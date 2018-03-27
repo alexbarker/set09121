@@ -93,7 +93,7 @@ target_link_libraries(PRACTICAL_5_PHYSICS Box2D)
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_5_PHYSICS)
 
 #### Practical 6 ####
-## Platformer
+#### Platformer ####
 file(GLOB_RECURSE SOURCES practical_6/*.cpp practical_6/*.h)
 file(GLOB_RECURSE CMPNTS practical_6/components/*.cpp practical_6/components/*.h)
 file(GLOB_RECURSE SCENES practical_6/scenes/*.cpp practical_6/scenes/*.h)
@@ -105,7 +105,7 @@ target_link_libraries(PRACTICAL_6_PLATFORMER lib_engine)
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_6_PLATFORMER)
 
 #### Practical 7 ####
-## AI: Steering and Pathfinding
+#### AI: Steering and Pathfinding ####
 file(GLOB_RECURSE SOURCES practical_7/*.cpp practical_7/*.h)
 file(GLOB_RECURSE CMPNTS practical_7/components/*.cpp practical_7/components.h)
 file(GLOB_RECURSE SCENES practical_7/scenes/*.cpp practical_7/scenes/*.h)
@@ -114,6 +114,17 @@ source_group("components" FILES ${CMPNTS})
 source_group("resources" FILES ${RESOURCE_FILES})
 target_link_libraries(PRACTICAL_7_STEERING lib_engine)
 set(EXECUTABLES ${EXECUTABLES} PRACTICAL_7_STEERING)
+
+#### Practical 8 ####
+#### Making Decisions ####
+file(GLOB_RECURSE SOURCES practical_8/*.cpp practical_8/*.h)
+file(GLOB_RECURSE CMPNTS practical_8/components/*.cpp practical_8/components/*.h)
+file(GLOB_RECURSE SCENES practical_8/scenes/*.cpp practical_8/scenes/*.h)
+add_executable(PRACTICAL_8_DECISIONS ${SOURCES} ${CMPNTS} ${SCENES} ${RESOURCE_FILES})
+source_group("components" FILES ${CMPNTS})
+source_group("resources" FILES ${RESOURCE_FILES})
+target_link_libraries(PRACTICAL_8_DECISIONS lib_engine)
+set(EXECUTABLES ${EXECUTABLES} PRACTICAL_8_DECISIONS)
 
 #### Target for copying resources to build dir####
 if(APPLE)
