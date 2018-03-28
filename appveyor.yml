@@ -1,10 +1,19 @@
-version: 1.0.{build}
+version: 1.0.{workbook_build}
 image: Visual Studio 2017
 configuration:
 - Debug
 - Release
-install:
-- cmd: git submodule update --init --recursive && cmake -G "Visual Studio 15 2017 Win64"
+before_build:
+- cmd: >-
+
+    git submodule update --init --recursive
+    
+    if not exist workbook_build\ mkdir workbook_build
+
+    cd workbook_build
+    
+    cmake -G "Visual Studio 15 2017 Win64" ../
 build:
-  project: Games_Engineering.sln
+  project: workbook_build/PACKAGE.vcxproj
+  parallel: true
   verbosity: minimal
