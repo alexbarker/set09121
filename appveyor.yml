@@ -1,41 +1,26 @@
 version: 1.0.{build}
 image: Visual Studio 2017
-
-configuration:
-- Debug
-- Release
-
-cache:
-- workbook_build/lib -> appveyor.yml
-
+configuration: Release
 before_build:
-- cmd: >-
-    git submodule update --init --recursive
-    
-    if not exist workbook_build\ mkdir workbook_build
-    cd workbook_build
-    
-    cmake -G "Visual Studio 15 2017 Win64" ../
-    
+- cmd: git submodule update --init --recursive & cmake -G "Visual Studio 15 2017"
 build:
-  project: workbook_build/PACKAGE.vcxproj
-  parallel: true
+  project: PACKAGE.vcxproj
   verbosity: minimal
-
 after_build:
 - cmd: >-
-    7z a test_%CONFIGURATION%_win64.zip %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/test_main.exe %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/*.dll  %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/**/*
-    
-    cd ../workbook_build/installer/
-    
-    dir
-    
-    for %%a in (*.exe) do ren "%%~a" "%%~na_%CONFIGURATION%_win64%%~xa"
-    
-    dir
-    
+    cd %APPVEYOR_BUILD_FOLDER%
+
+    set LOC=%APPVEYOR_BUILD_FOLDER%/bin/%CONFIGURATION%/
+
+    set ZIPNAME=set09121_%CONFIGURATION%_%APPVEYOR_REPO_COMMIT%.zip
+
+    7z a %ZIPNAME% %LOC%/*.exe %LOC%/*.dll %LOC%/*
 artifacts:
-  - path: workbook_build/*.zip
-    name: test_zip
-  - path: workbook_build/installer/*.exe
-    name: test_installer
+- path: '*.zip'
+  name: zip
+deploy:
+- provider: GitHub
+  description: First try at GitHub Deployment
+  auth_token:
+    secure: qjlAVcgnafDDLEjvW1N8Agmoju7/zFBEfC+58E8GT3fto5Uy014NdL/ZAXKjzBZE
+  prerelease: true
