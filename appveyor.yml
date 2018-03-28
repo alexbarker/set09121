@@ -13,14 +13,14 @@ before_build:
 
     git submodule update --init --recursive
     
-    if not exist build\ mkdir build
+    if not exist workbook_build\ mkdir build
 
     cd build
     
     cmake -G "Visual Studio 15 2017 Win64" ../
     
 build:
-  project: build/PACKAGE.vcxproj
+  project: workbook_build/PACKAGE.vcxproj
   parallel: true
   verbosity: minimal
   
@@ -29,7 +29,7 @@ after_build:
 
     7z a Workbook_%CONFIGURATION%_win64.zip %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/Workbook_main.exe %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/*.dll  %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/**/*
     
-    cd ../build/installer/
+    cd ../workbook_build/installer/
     
     dir
     
@@ -38,9 +38,9 @@ after_build:
     dir
     
 artifacts:
-  - path: build/*.zip
+  - path: workbook_build/*.zip
     name: Workbook_zip
-  - path: build/installer/*.exe
+  - path: workbook_build/installer/*.exe
     name: Workbook_installer
     
 deploy:
