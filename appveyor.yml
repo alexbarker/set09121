@@ -1,0 +1,41 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+
+configuration:
+- Debug
+- Release
+
+cache:
+- workbook_build/lib -> appveyor.yml
+
+before_build:
+- cmd: >-
+    git submodule update --init --recursive
+    
+    if not exist workbook_build\ mkdir workbook_build
+    cd workbook_build
+    
+    cmake -G "Visual Studio 15 2017 Win64" ../
+    
+build:
+  project: workbook_build/PACKAGE.vcxproj
+  parallel: true
+  verbosity: minimal
+
+after_build:
+- cmd: >-
+    7z a test_%CONFIGURATION%_win64.zip %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/test_main.exe %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/*.dll  %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/**/*
+    
+    cd ../workbook_build/installer/
+    
+    dir
+    
+    for %%a in (*.exe) do ren "%%~a" "%%~na_%CONFIGURATION%_win64%%~xa"
+    
+    dir
+    
+artifacts:
+  - path: workbook_build/*.zip
+    name: test_zip
+  - path: workbook_build/installer/*.exe
+    name: test_installer
