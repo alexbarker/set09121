@@ -8,6 +8,8 @@ Repository for Games Engineering Workbook.
 | [![Build status](https://ci.appveyor.com/api/projects/status/tkcy1l30nasrdo0h?svg=true)](https://ci.appveyor.com/project/alexbarker/set09121-workbook)
 | |
 
+[![forthebadge](http://forthebadge.com/images/badges/designed-in-ms-paint.svg)](http://forthebadge.com)
+
 # Projects
 
 | Practical | Project |
