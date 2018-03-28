@@ -3,6 +3,11 @@
 Alex Barker - 40333139 - 
 Repository for Games Engineering Workbook. 
 
+| Windows Build | Linux / Mac Build |
+| ------------- | ------------- |
+| [![Build status](https://ci.appveyor.com/api/projects/status/tkcy1l30nasrdo0h?svg=true)](https://ci.appveyor.com/project/alexbarker/set09121-workbook)
+| |
+
 # Projects
 
 | Practical | Project |
