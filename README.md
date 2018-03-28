@@ -10,7 +10,11 @@ Repository for Games Engineering Workbook.
 
 [![forthebadge](http://forthebadge.com/images/badges/designed-in-ms-paint.svg)](http://forthebadge.com)
 
-[Click Here to Download](https://github.com/alexbarker/set09121_workbook/releases)
+
+| To visit the website: [Click Here](https://alexbarker.github.io/set09121_workbook/) |
+
+| To download release version: [Click Here](https://github.com/alexbarker/set09121_workbook/releases) |
+
 
 # Projects
 
